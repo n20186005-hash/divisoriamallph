@@ -6,7 +6,7 @@ Isang independent, single-page Filipino guide para sa Divisoria Mall sa Maynila.
 
 - Astro 7 + TypeScript
 - Tailwind CSS 4 (Vite plugin)
-- Cloudflare Workers adapter
+- Cloudflare Workers Static Assets
 - pnpm (eksaktong bersyon sa `packageManager`)
 - Walang database, login o CMS
 
@@ -36,7 +36,7 @@ pnpm build
 pnpm wrangler deploy
 ```
 
-Ang `wrangler.jsonc` ay naka-configure para sa output ng Astro Cloudflare adapter.
+Ang `wrangler.jsonc` ay naka-configure para sa Workers Static Assets deployment ng laman ng `dist/`.
 
 ## QA bago i-deploy
 
