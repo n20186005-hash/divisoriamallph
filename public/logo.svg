@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 96" role="img" aria-labelledby="title desc">
+  <title id="title">Divisoria Mall Guide</title>
+  <desc id="desc">Isang estilong tindahan na may berdeng scallop at pink na titik D</desc>
+  <g transform="translate(4 4)">
+    <rect x="0" y="0" width="88" height="88" rx="22" fill="#0D684F"/>
+    <path d="M15 26h58v17c-5 0-9-4-9-9 0 5-4 9-9 9s-9-4-9-9c0 5-4 9-9 9s-9-4-9-9c0 5-4 9-9 9s-9-4-9-9c0 5-2 9-4 9V26Z" fill="#F3E9D3"/>
+    <path d="M24 42h40v29H24z" fill="#F3E9D3"/>
+    <path d="M37 48h12.5c9.7 0 16.5 5.7 16.5 13.5S59.2 75 49.5 75H37V48Zm12 20.5c5.4 0 8.7-2.5 8.7-7s-3.3-7-8.7-7h-3.8v14H49Z" fill="#D82E78"/>
+  </g>
+  <g fill="#16362E">
+    <text x="112" y="43" font-size="33" font-weight="800" font-family="Arial, Helvetica, sans-serif" letter-spacing="1.2">DIVISORIA</text>
+    <text x="114" y="70" font-size="19" font-weight="700" font-family="Arial, Helvetica, sans-serif" letter-spacing="4.6" fill="#D82E78">MALL GUIDE</text>
+  </g>
+</svg>

@@ -1,0 +1,386 @@
+---
+import '../styles/global.css';
+
+const title = 'Divisoria Mall Guide | Sulit na Shopping sa Maynila';
+const description = 'Praktikal na gabay sa Divisoria Mall sa Maynila: oras, bargain shopping tips, biyahe, parking, pagkain, kalapit na pasyalan at mapa.';
+const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
+const heroImageUrl = Astro.site ? new URL('/images/divisoria-mall-hero.jpg', Astro.site) : undefined;
+
+const openingHours = [
+  'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
+].map((dayOfWeek) => ({
+  '@type': 'OpeningHoursSpecification',
+  dayOfWeek,
+  opens: '07:00',
+  closes: '18:15',
+}));
+
+const placeData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'TouristAttraction',
+      '@id': canonicalUrl ? `${canonicalUrl.href}#attraction` : undefined,
+      name: 'Divisoria Mall',
+      description: 'Isang kilalang shopping destination sa Divisoria, Maynila para sa budget finds, tingi at maramihang bilihan.',
+      url: canonicalUrl?.href,
+      image: heroImageUrl?.href,
+      isAccessibleForFree: true,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '866 Tabora St',
+        addressLocality: 'Manila',
+        addressRegion: 'Metro Manila',
+        addressCountry: 'PH',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 14.6030095,
+        longitude: 120.970585,
+      },
+      openingHoursSpecification: openingHours,
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '4.2',
+        reviewCount: '6694',
+        bestRating: '5',
+      },
+    },
+    {
+      '@type': ['ShoppingCenter', 'LocalBusiness'],
+      '@id': canonicalUrl ? `${canonicalUrl.href}#business` : undefined,
+      name: 'Divisoria Mall',
+      url: canonicalUrl?.href,
+      image: heroImageUrl?.href,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '866 Tabora St',
+        addressLocality: 'Manila',
+        addressRegion: 'Metro Manila',
+        addressCountry: 'PH',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 14.6030095,
+        longitude: 120.970585,
+      },
+      openingHoursSpecification: openingHours,
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '4.2',
+        reviewCount: '6694',
+        bestRating: '5',
+      },
+      priceRange: '₱',
+    },
+  ],
+};
+
+const faqs = [
+  {
+    q: 'May entrance fee ba sa Divisoria Mall?',
+    a: 'Wala. Libre ang pagpasok sa mall; ang gastos ay depende sa mga bibilhin mo at sa napagkasunduang presyo sa tindahan.',
+  },
+  {
+    q: 'Puwede bang tumawad?',
+    a: 'Karaniwan, oo—lalo na sa ilang stall at kapag maramihan ang bibilhin. Magtanong nang maayos, ikumpara muna ang presyo, at huwag ipilit kung fixed price ang tindahan.',
+  },
+  {
+    q: 'Kailan pinakamagandang pumunta?',
+    a: 'Mas komportable ang weekday morning, lalo na malapit sa pagbubukas. Mas siksik ang lugar tuwing weekend, holiday at peak shopping season.',
+  },
+  {
+    q: 'Gaano katagal ang magandang ilaan?',
+    a: 'Maglaan ng humigit-kumulang 2–4 oras kung gusto mong mag-ikot, magkumpara ng presyo at kumain. Mas mahaba kung wholesale sourcing o maraming kategoriya ang target mo.',
+  },
+  {
+    q: 'Cash ba ang mas praktikal?',
+    a: 'Oo. Magdala ng cash at maliliit na bills. May ilang tindahan na maaaring tumanggap ng digital payment, pero huwag itong asahang available sa bawat stall.',
+  },
+  {
+    q: 'May parking ba?',
+    a: 'Limitado at masikip ang access sa mismong Divisoria area. Kung naka-kotse, mas praktikal na dumating nang maaga at tingnan ang paid parking sa mga kalapit na mall gaya ng 168, Lucky Chinatown o Tutuban, depende sa availability sa araw ng punta.',
+  },
+];
+
+const faqData = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(({ q, a }) => ({
+    '@type': 'Question',
+    name: q,
+    acceptedAnswer: { '@type': 'Answer', text: a },
+  })),
+};
+---
+<!doctype html>
+<html lang="fil-PH">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#0D684F" />
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="fil_PH" />
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl.href} />}
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl.href} />}
+    {heroImageUrl && <meta property="og:image" content={heroImageUrl.href} />}
+    <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <title>{title}</title>
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(placeData)}></script>
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(faqData)}></script>
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HXM22WWPKP');
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="#top" aria-label="Bumalik sa itaas">
+          <img src="/logo.svg" alt="Divisoria Mall Guide" width="420" height="96" />
+        </a>
+        <nav class="nav-links" aria-label="Pangunahing nabigasyon">
+          <a href="#gabay">Gabay</a>
+          <a href="#biyahe">Biyahe</a>
+          <a href="#kain">Kain</a>
+          <a href="#malapit">Malapit</a>
+          <a href="#faq">FAQ</a>
+          <a class="map-pill" href="https://maps.app.goo.gl/L8eri2PCFLhADxDk9" target="_blank" rel="noopener noreferrer">Buksan ang mapa ↗</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-media">
+          <img src="/images/divisoria-mall-hero.jpg" alt="Harapan ng Divisoria Mall sa Maynila" width="3840" height="2560" fetchpriority="high" />
+        </div>
+        <div class="hero-pattern" aria-hidden="true"></div>
+        <div class="container hero-inner">
+          <div class="hero-grid">
+            <div>
+              <div class="kicker"><span>Independent na gabay</span> Maynila · Pilipinas</div>
+              <h1 id="hero-title">Divisoria<small>Sulit, siksik, totoong Maynila.</small></h1>
+              <p class="hero-copy">Para sa bargain hunters, wholesale buyers at curious na gala: ito ang praktikal na one-page guide para makarating, mamili at hindi ma-overwhelm sa ritmo ng Divisoria Mall.</p>
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="#gabay">Simulan ang gabay ↓</a>
+                <a class="btn btn-secondary" href="https://maps.app.goo.gl/L8eri2PCFLhADxDk9" target="_blank" rel="noopener noreferrer">Direksiyon sa Google Maps ↗</a>
+              </div>
+            </div>
+            <aside class="ticket" aria-label="Mabilisang impormasyon">
+              <span class="ticket-label">Quick receipt</span>
+              <h2>Bago ka sumabak</h2>
+              <div class="ticket-row"><span>Pasok</span><strong>Libre</strong></div>
+              <div class="ticket-row"><span>Karaniwang oras</span><strong>07:00–18:15</strong></div>
+              <div class="ticket-row"><span>Rating sa Google</span><strong>4.2 / 5 · 6,694 review</strong></div>
+              <div class="ticket-row"><span>Suggested stay</span><strong>2–4 oras</strong></div>
+              <p class="ticket-note">Maaaring magbago ang mall hours sa holidays at special schedules. I-check ang listing bago bumiyahe.</p>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+          <span>Presyong pang-Divisoria</span><span>Magkumpara bago bumili</span><span>Cash + small bills</span><span>Weekday morning</span><span>Wholesale at tingi</span><span>Comfortable shoes</span>
+          <span>Presyong pang-Divisoria</span><span>Magkumpara bago bumili</span><span>Cash + small bills</span><span>Weekday morning</span><span>Wholesale at tingi</span><span>Comfortable shoes</span>
+        </div>
+      </div>
+
+      <section class="section" id="gabay">
+        <div class="container">
+          <span class="eyebrow">Mabilisang basa</span>
+          <h2 class="section-title">Hindi ito “mall stroll.” Isa itong treasure hunt.</h2>
+          <p class="section-lede">Siksik ang mga pasilyo, magkakatabi ang stalls, at mabilis ang takbo ng tawaran at pagpili. Ang saya rito ay nasa paghahanap: parehong item, ibang presyo, ibang kulay, ibang tindahan—ilang hakbang lang ang pagitan.</p>
+          <div class="facts-grid">
+            <article class="fact-card">
+              <span class="fact-no">01 / PRESYO</span>
+              <div class="fact-value">₱0</div>
+              <div class="fact-copy">Walang entrance fee. Shopping budget ang kailangan mong bantayan.</div>
+            </article>
+            <article class="fact-card">
+              <span class="fact-no">02 / ORAS</span>
+              <div class="fact-value">07:00</div>
+              <div class="fact-copy">Pumunta nang maaga para mas malamig, mas maluwag at mas madaling magkumpara.</div>
+            </article>
+            <article class="fact-card">
+              <span class="fact-no">03 / TAGAL</span>
+              <div class="fact-value">2–4h</div>
+              <div class="fact-copy">Sapat para sa focused shopping, price comparison at isang food stop.</div>
+            </article>
+            <article class="fact-card">
+              <span class="fact-no">04 / LOKASYON</span>
+              <div class="fact-value">Tabora</div>
+              <div class="fact-copy">866 Tabora St, Binondo, Manila—nasa gitna ng mas malaking Divisoria shopping district.</div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-tight">
+        <div class="container story-grid">
+          <div class="photo-stack">
+            <figure class="photo-frame">
+              <img src="/images/divisoria-shopping.jpg" alt="Siksik na shopping aisle sa Divisoria" width="2048" height="1536" loading="lazy" />
+              <figcaption>Ang visual rhythm ng Divisoria: produkto, pasilyo, presyo, ulit.</figcaption>
+              <span class="sticker">TIP: kumuha ng litrato ng stall o aisle bago lumayo</span>
+            </figure>
+          </div>
+          <div>
+            <span class="eyebrow">Paano mamili</span>
+            <h2 class="section-title">Gawing sistema ang bargain hunt.</h2>
+            <p class="section-lede">Mas sulit ang Divisoria kapag may simpleng strategy. Hindi kailangang tawaran lahat—pero kailangang marunong magkumpara.</p>
+            <div class="pasilyo-list">
+              <article class="pasilyo"><div class="pasilyo-no">1</div><div><h3>Ikot muna, huwag agad checkout.</h3><p>Kung hindi urgent ang item, tumingin muna sa 2–3 tindahan. Magkakalapit ang maraming magkakaparehong produkto.</p></div></article>
+              <article class="pasilyo"><div class="pasilyo-no">2</div><div><h3>Sabihin kung tingi o maramihan.</h3><p>Magkaiba ang presyo ng isang piraso at bulk. Tanungin ang minimum quantity bago ka mag-compute.</p></div></article>
+              <article class="pasilyo"><div class="pasilyo-no">3</div><div><h3>Magtanong nang diretso pero magalang.</h3><p>“May tawad pa po?” o “Magkano po kung sampu?”—simple, malinaw, walang drama.</p></div></article>
+              <article class="pasilyo"><div class="pasilyo-no">4</div><div><h3>I-secure ang wallet at phone.</h3><p>Normal na masikip ang crowd. Gumamit ng zippered crossbody bag at iwasang ilagay ang valuables sa madaling maabot na bulsa.</p></div></article>
+            </div>
+            <div class="tip-box"><strong>Street-smart detail:</strong> Magdala ng tubig, maliit na eco bag o foldable tote, comfortable shoes at maliliit na bills. Kapag may nakita kang gustong balikan, litrato ang stall number o landmark sa pasilyo.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section board" aria-labelledby="plan-title">
+        <div class="container">
+          <span class="eyebrow" style="color:#f5d8e6">Best time + gastos</span>
+          <h2 class="section-title" id="plan-title">Planuhin ang timing, hindi lang ang shopping list.</h2>
+          <p class="section-lede">Sa Divisoria, malaking bagay ang isang oras na mas maaga. Mas kaunting crowd, mas madali ang transport at mas malinaw ang isip sa pag-compute ng “sulit ba talaga?”</p>
+          <div class="planner-grid">
+            <article class="planner-card">
+              <div class="planner-icon">☀</div>
+              <h3>Pinakamagandang oras</h3>
+              <p><strong>Weekday morning</strong>, lalo na sa unang bahagi ng araw. Iwasan ang peak crowd kung gusto mo ng mas relaks na pag-ikot.</p>
+              <ul class="micro-list"><li>Mas presko</li><li>Mas madaling magtanong sa stalls</li><li>Mas manageable ang traffic</li></ul>
+            </article>
+            <article class="planner-card">
+              <div class="planner-icon">₱</div>
+              <h3>Ticket / gastos</h3>
+              <p><strong>Libre ang entrance.</strong> Walang ticket na kailangang bilhin. Ang gastos ay shopping, pagkain at transport/parking.</p>
+              <ul class="micro-list"><li>Walang fixed shopping cost</li><li>Bulk price ≠ tingi price</li><li>Magdala ng cash backup</li></ul>
+            </article>
+            <article class="planner-card">
+              <div class="planner-icon">◷</div>
+              <h3>Suggested stay</h3>
+              <p><strong>2–4 oras</strong> para sa casual shopping. Kung sourcing para sa negosyo, natural na kailangan ng mas mahabang oras.</p>
+              <ul class="micro-list"><li>1 oras: mabilisang target item</li><li>2–4 oras: normal na ikot</li><li>Half-day: serious sourcing</li></ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="biyahe">
+        <div class="container">
+          <span class="eyebrow">Detalyadong biyahe</span>
+          <h2 class="section-title">Mas madaling makarating kapag hindi mo ipinipilit ang kotse sa pinakasiksik na kalsada.</h2>
+          <p class="section-lede">Nasa dense commercial core ang Divisoria Mall. Public transport, walking at maikling last-mile ride ang madalas na mas praktikal kaysa door-to-door driving.</p>
+          <div class="transport-grid">
+            <div class="route-list">
+              <article class="route"><div class="route-mode">LRT-1</div><div><h3>Doroteo Jose → Recto → Divisoria</h3><p>Bumaba sa Doroteo Jose, tumawid papuntang Recto corridor, saka sumakay ng jeep/e-jeep na biyaheng Divisoria/Tutuban. Bumaba sa pinaka-convenient na bahagi malapit sa Tabora at maglakad papunta sa mall.</p></div></article>
+              <article class="route"><div class="route-mode">LRT-1</div><div><h3>Carriedo → Binondo / Divisoria</h3><p>Magandang opsyon kung gusto mong isabay ang Binondo. Mula Carriedo, puwedeng mag-jeep/e-jeep o maglakad nang mas mahaba depende sa ruta at init.</p></div></article>
+              <article class="route"><div class="route-mode">Ride-hail</div><div><h3>I-pin ang Divisoria Mall, pero maging flexible sa drop-off.</h3><p>Sa peak traffic, maaaring mas mabilis na bumaba ng kaunti bago ang pinakamasikip na block at lakarin ang huling bahagi. Gamitin ang live map para sa aktwal na road conditions.</p></div></article>
+              <article class="route"><div class="route-mode">Jeep</div><div><h3>Recto / Tutuban corridor</h3><p>Maraming jeep at e-jeep ang dumadaan sa mas malaking Divisoria area. Sabihin sa driver na Divisoria/Tutuban at i-confirm kung saan pinakamalapit na babaan para sa Tabora.</p></div></article>
+            </div>
+            <aside class="parking-note">
+              <h3>Parking: huwag umasa sa curbside.</h3>
+              <p>Masikip ang access at puwedeng mabilis mapuno ang available parking. Kung kailangan talagang magdala ng kotse, mas mainam ang maagang dating at paid parking sa kalapit na commercial complexes.</p>
+              <ul>
+                <li>168 Shopping Mall — malapit at walkable mula sa Divisoria core.</li>
+                <li>Lucky Chinatown — useful base kung isasabay ang Binondo.</li>
+                <li>Tutuban Center — alternatibong parking area depende sa availability.</li>
+              </ul>
+              <p><strong>Tip:</strong> I-check ang current parking rules at rates sa araw ng punta; hindi pare-pareho ang availability at singil.</p>
+            </aside>
+          </div>
+
+          <div class="map-shell" id="mapa">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6671.165840586059!2d120.970585!3d14.603009499999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397cb1cec8ef9f5%3A0x9f924a9ec08e8e82!2sDivisoria%20Mall!5e1!3m2!1sfil!2sph!4v1786936121413!5m2!1sfil!2sph" width="600" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Mapa ng Divisoria Mall sa Maynila"></iframe>
+          </div>
+          <div class="map-actions">
+            <p class="map-address"><strong>Divisoria Mall</strong><br />866 Tabora St, Binondo, Manila, Metro Manila, Pilipinas</p>
+            <a class="btn" style="background:var(--green);color:white" href="https://maps.app.goo.gl/L8eri2PCFLhADxDk9" target="_blank" rel="noopener noreferrer">Buksan ang live directions ↗</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-tight" id="kain">
+        <div class="container">
+          <span class="eyebrow">Kain sa paligid</span>
+          <h2 class="section-title">Pagkatapos ng tawad, recharge sa Binondo side.</h2>
+          <p class="section-lede">Nasa pagitan ka ng Divisoria at Binondo, kaya madaling gawing food stop ang dim sum, noodles o Filipino comfort food. Ang mga ito ay praktikal na nearby options, hindi “best of” ranking.</p>
+          <div class="food-strip">
+            <div class="food-visual"><img src="/images/divisoria-street.jpg" alt="Abalang kalye sa Divisoria at Binondo district" width="1280" height="853" loading="lazy" /></div>
+            <div class="food-list">
+              <article class="food-item"><small>168 Shopping Mall</small><h3>Wai Ying Dimsums — 168 Branch</h3><p>Convenient kung ayaw mong lumayo sa shopping zone: dim sum at quick Chinese meals sa loob ng 168 area.</p></article>
+              <article class="food-item"><small>Yuchengco St · Binondo</small><h3>Ying Ying Tea House</h3><p>Classic Binondo stop para sa dim sum, rice meals at Chinese comfort food; magandang isabay bago o pagkatapos ng Divisoria run.</p></article>
+              <article class="food-item"><small>Lucky Chinatown</small><h3>Manam Comfort Filipino</h3><p>Mas relaxed at air-conditioned na sit-down option kung gusto mong magpahinga mula sa street-market pace.</p></article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="malapit">
+        <div class="container">
+          <span class="eyebrow">Kalapit na pasyalan</span>
+          <h2 class="section-title">Gawing buong “old Manila” loop ang shopping trip.</h2>
+          <p class="section-lede">Kung may energy pa, puwedeng pagsamahin ang Divisoria shopping at ilang stop sa Tondo–Binondo area. Piliin lang ang akma sa oras at init.</p>
+          <div class="nearby-grid">
+            <article class="place-card">
+              <img src="/images/tutuban-center.jpg" alt="Tutuban Center sa C.M. Recto Avenue" width="1280" height="853" loading="lazy" />
+              <div class="place-body"><div class="place-meta"><span class="tag">Shopping + history</span></div><h3>Tutuban Center</h3><p>Historic former railway-station complex na naging shopping destination. Magandang contrast sa mas raw na Divisoria mall-and-street experience.</p></div>
+            </article>
+            <article class="place-card">
+              <img src="/images/binondo-church.jpg" alt="Binondo Church at Plaza San Lorenzo Ruiz" width="1280" height="853" loading="lazy" />
+              <div class="place-body"><div class="place-meta"><span class="tag tag-pink">Heritage</span><span class="tag">Binondo</span></div><h3>Binondo Church + Ongpin</h3><p>Isabay ang plaza, simbahan at Ongpin food streets para magkaroon ng heritage at food layer ang shopping day.</p></div>
+            </article>
+            <article class="place-card">
+              <img src="/images/divisoria-street.jpg" alt="Street scene sa Divisoria district" width="1280" height="853" loading="lazy" />
+              <div class="place-body"><div class="place-meta"><span class="tag">Urban walk</span></div><h3>Binondo / Chinatown district</h3><p>Kung gusto mo ng mas mahabang lakad, ikonekta ang Divisoria sa Lucky Chinatown at Chinatown Museum para sa mas modernong indoor stop.</p></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-tight" id="faq">
+        <div class="container">
+          <span class="eyebrow">FAQ</span>
+          <h2 class="section-title">Mga tanong bago ang unang Divisoria run.</h2>
+          <div class="faq-list">
+            {faqs.map((item) => (
+              <details>
+                <summary>{item.q}</summary>
+                <p>{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="photo-credits" aria-labelledby="credits-title">
+        <div class="container">
+          <h2 id="credits-title">Mga kredito ng larawan</h2>
+          <p>Mga lokal na kopya mula sa Wikimedia Commons: Ralff Nestor Nacor (CC BY-SA 4.0), Zarate123 (CC BY-SA 4.0), Timothy Albano (CC BY 3.0), at Patrick Roque (CC BY-SA 3.0). Tingnan ang kumpletong source at attribution sa <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a> at sa <code>CREDITS.md</code> ng project.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div>
+          <img src="/logo.svg" alt="Divisoria Mall Guide" width="420" height="96" loading="lazy" />
+          <p><strong>Hindi ito opisyal na website ng Divisoria Mall.</strong> Independent travel at shopping guide ito; maaaring magbago ang hours, parking, routes, presyo at tenant details. I-verify ang time-sensitive na impormasyon bago bumiyahe.</p>
+        </div>
+        <div class="footer-badge">Made for Manila explorers</div>
+      </div>
+    </footer>
+  </body>
+</html>
