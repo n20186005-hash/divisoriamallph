@@ -1,8 +1,9 @@
 ---
 import '../styles/global.css';
+import { SITE_NAME, site } from '../data/site';
 
-const title = 'Divisoria Mall Guide | Sulit na Shopping sa Maynila';
-const description = 'Praktikal na gabay sa Divisoria Mall sa Maynila: oras, bargain shopping tips, biyahe, parking, pagkain, kalapit na pasyalan at mapa.';
+const title = `${SITE_NAME}: Store Directory, Opening Hours & Parking`;
+const description = 'Plan your visit to Divisoria Mall in Manila — find 2026 opening hours, closing time, parking guide, and a store directory for bargain and wholesale shopping.';
 const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
 const heroImageUrl = Astro.site ? new URL('/images/divisoria-mall-hero.jpg', Astro.site) : undefined;
 
@@ -11,8 +12,8 @@ const openingHours = [
 ].map((dayOfWeek) => ({
   '@type': 'OpeningHoursSpecification',
   dayOfWeek,
-  opens: '07:00',
-  closes: '18:15',
+  opens: site.opens,
+  closes: site.closes,
 }));
 
 const placeData = {
@@ -28,21 +29,21 @@ const placeData = {
       isAccessibleForFree: true,
       address: {
         '@type': 'PostalAddress',
-        streetAddress: '866 Tabora St',
-        addressLocality: 'Manila',
-        addressRegion: 'Metro Manila',
-        addressCountry: 'PH',
+        streetAddress: site.streetAddress,
+        addressLocality: site.addressLocality,
+        addressRegion: site.addressRegion,
+        addressCountry: site.addressCountry,
       },
       geo: {
         '@type': 'GeoCoordinates',
-        latitude: 14.6030095,
-        longitude: 120.970585,
+        latitude: site.latitude,
+        longitude: site.longitude,
       },
       openingHoursSpecification: openingHours,
       aggregateRating: {
         '@type': 'AggregateRating',
-        ratingValue: '4.2',
-        reviewCount: '6694',
+        ratingValue: site.ratingValue,
+        reviewCount: site.reviewCount,
         bestRating: '5',
       },
     },
@@ -54,21 +55,21 @@ const placeData = {
       image: heroImageUrl?.href,
       address: {
         '@type': 'PostalAddress',
-        streetAddress: '866 Tabora St',
-        addressLocality: 'Manila',
-        addressRegion: 'Metro Manila',
-        addressCountry: 'PH',
+        streetAddress: site.streetAddress,
+        addressLocality: site.addressLocality,
+        addressRegion: site.addressRegion,
+        addressCountry: site.addressCountry,
       },
       geo: {
         '@type': 'GeoCoordinates',
-        latitude: 14.6030095,
-        longitude: 120.970585,
+        latitude: site.latitude,
+        longitude: site.longitude,
       },
       openingHoursSpecification: openingHours,
       aggregateRating: {
         '@type': 'AggregateRating',
-        ratingValue: '4.2',
-        reviewCount: '6694',
+        ratingValue: site.ratingValue,
+        reviewCount: site.reviewCount,
         bestRating: '5',
       },
       priceRange: '₱',
@@ -124,6 +125,7 @@ const faqData = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:locale" content="fil_PH" />
+    <meta property="og:site_name" content={SITE_NAME} />
     {canonicalUrl && <link rel="canonical" href={canonicalUrl.href} />}
     {canonicalUrl && <meta property="og:url" content={canonicalUrl.href} />}
     {heroImageUrl && <meta property="og:image" content={heroImageUrl.href} />}
