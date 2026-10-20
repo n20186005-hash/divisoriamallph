@@ -2,85 +2,40 @@
 import '../styles/global.css';
 import { SITE_NAME, site } from '../data/site';
 
-const title = `${SITE_NAME}: Store Directory, Opening Hours & Parking`;
-const description = 'Plan your visit to Divisoria Mall in Manila — find 2026 opening hours, closing time, parking guide, and a store directory for bargain and wholesale shopping.';
+const title = 'Divisoria Mall Manila: Oras, 866 Tabora Address at Gabay';
+const description = 'Gabay sa Divisoria Mall, 866 Tabora St, Manila: Google Maps hours na may petsa ng pag-check, lokasyon, kaibahan sa ibang mall, at mga tanong bago mamili.';
 const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
 const heroImageUrl = Astro.site ? new URL('/images/divisoria-mall-hero.jpg', Astro.site) : undefined;
 
-const openingHours = [
-  'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
-].map((dayOfWeek) => ({
-  '@type': 'OpeningHoursSpecification',
-  dayOfWeek,
-  opens: site.opens,
-  closes: site.closes,
-}));
-
 const placeData = {
   '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'TouristAttraction',
-      '@id': canonicalUrl ? `${canonicalUrl.href}#attraction` : undefined,
-      name: 'Divisoria Mall',
-      description: 'Isang kilalang shopping destination sa Divisoria, Maynila para sa budget finds, tingi at maramihang bilihan.',
-      url: canonicalUrl?.href,
-      image: heroImageUrl?.href,
-      isAccessibleForFree: true,
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: site.streetAddress,
-        addressLocality: site.addressLocality,
-        addressRegion: site.addressRegion,
-        addressCountry: site.addressCountry,
-      },
-      geo: {
-        '@type': 'GeoCoordinates',
-        latitude: site.latitude,
-        longitude: site.longitude,
-      },
-      openingHoursSpecification: openingHours,
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: site.ratingValue,
-        reviewCount: site.reviewCount,
-        bestRating: '5',
-      },
-    },
-    {
-      '@type': ['ShoppingCenter', 'LocalBusiness'],
-      '@id': canonicalUrl ? `${canonicalUrl.href}#business` : undefined,
-      name: 'Divisoria Mall',
-      url: canonicalUrl?.href,
-      image: heroImageUrl?.href,
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: site.streetAddress,
-        addressLocality: site.addressLocality,
-        addressRegion: site.addressRegion,
-        addressCountry: site.addressCountry,
-      },
-      geo: {
-        '@type': 'GeoCoordinates',
-        latitude: site.latitude,
-        longitude: site.longitude,
-      },
-      openingHoursSpecification: openingHours,
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: site.ratingValue,
-        reviewCount: site.reviewCount,
-        bestRating: '5',
-      },
-      priceRange: '₱',
-    },
-  ],
+  '@type': 'TouristAttraction',
+  '@id': canonicalUrl ? `${canonicalUrl.href}#attraction` : undefined,
+  name: site.name,
+  description,
+  url: canonicalUrl?.href,
+  image: heroImageUrl?.href,
+  hasMap: site.mapsUrl,
+  address: {'@type': 'PostalAddress', streetAddress: site.streetAddress, addressLocality: site.addressLocality, addressRegion: site.addressRegion, addressCountry: site.addressCountry},
+  geo: {'@type': 'GeoCoordinates', latitude: site.latitude, longitude: site.longitude},
 };
 
 const faqs = [
   {
+    q: 'Anong oras bukas at nagsasara ang Divisoria Mall?',
+    a: 'Noong 19 Oktubre 2026, Google Maps ay naglista ng 07:00–18:15 para sa lahat ng pitong araw. Snapshot ito ng mall listing, hindi garantiya ng oras ng bawat tindahan o pagbubukas sa araw ng punta. I-check ang live na mapa at mismong tindahan bago bumiyahe.',
+  },
+  {
+    q: 'Saan ang Divisoria Mall at pareho ba ito ng 168 o 999?',
+    a: 'Ang gabay na ito ay para sa Divisoria Mall na nakalista sa Google Maps sa 866 Tabora St, Binondo, Manila. Hindi ito kaparehong gusali ng 168 o 999, at hindi kumpletong gabay sa buong Divisoria district. Gamitin ang eksaktong pangalan at pin sa mapa.',
+  },
+  {
+    q: 'May beripikadong store directory o listahan ng presyo?',
+    a: 'Walang kasalukuyang kumpletong tenant directory o price list na beripikado sa gabay na ito. Kumpirmahin ang stall number, produkto, minimum na dami, final na presyo at return policy sa mismong tindahan bago magbayad.',
+  },
+  {
     q: 'May entrance fee ba sa Divisoria Mall?',
-    a: 'Wala. Libre ang pagpasok sa mall; ang gastos ay depende sa mga bibilhin mo at sa napagkasunduang presyo sa tindahan.',
+    a: 'Hindi beripikado rito ang kasalukuyang admission policy. Tanungin ang mall o kaukulang attendant tungkol sa anumang singil; hiwalay ang pamimili, pagkain, transport at parking.',
   },
   {
     q: 'Puwede bang tumawad?',
@@ -118,7 +73,7 @@ const faqData = {
 <html lang="fil-PH">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0D684F" />
     <meta name="description" content={description} />
     <meta property="og:type" content="website" />
@@ -129,6 +84,10 @@ const faqData = {
     {canonicalUrl && <link rel="canonical" href={canonicalUrl.href} />}
     {canonicalUrl && <meta property="og:url" content={canonicalUrl.href} />}
     {heroImageUrl && <meta property="og:image" content={heroImageUrl.href} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {heroImageUrl && <meta name="twitter:image" content={heroImageUrl.href} />}
     <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png" />
@@ -171,7 +130,7 @@ const faqData = {
           <div class="hero-grid">
             <div>
               <div class="kicker"><span>Independent na gabay</span> Maynila · Pilipinas</div>
-              <h1 id="hero-title">Divisoria<small>Sulit, siksik, totoong Maynila.</small></h1>
+              <h1 id="hero-title">Divisoria Mall<small>866 Tabora St · Manila</small></h1>
               <p class="hero-copy">Para sa bargain hunters, wholesale buyers at curious na gala: ito ang praktikal na one-page guide para makarating, mamili at hindi ma-overwhelm sa ritmo ng Divisoria Mall.</p>
               <div class="hero-actions">
                 <a class="btn btn-primary" href="#gabay">Simulan ang gabay ↓</a>
@@ -181,11 +140,11 @@ const faqData = {
             <aside class="ticket" aria-label="Mabilisang impormasyon">
               <span class="ticket-label">Quick receipt</span>
               <h2>Bago ka sumabak</h2>
-              <div class="ticket-row"><span>Pasok</span><strong>Libre</strong></div>
+              <div class="ticket-row"><span>Admission / singil</span><strong>Itanong sa mall</strong></div>
               <div class="ticket-row"><span>Karaniwang oras</span><strong>07:00–18:15</strong></div>
-              <div class="ticket-row"><span>Rating sa Google</span><strong>4.2 / 5 · 6,694 review</strong></div>
+              <div class="ticket-row"><span>Rating sa Google</span><strong>4.2 / 5 · 6,728 review</strong></div>
               <div class="ticket-row"><span>Suggested stay</span><strong>2–4 oras</strong></div>
-              <p class="ticket-note">Maaaring magbago ang mall hours sa holidays at special schedules. I-check ang listing bago bumiyahe.</p>
+              <p class="ticket-note">Google Maps snapshot: 19 Oktubre 2026. Ang rating ay mula sa third party, hindi mga review ng gabay. Ang oras ay para sa mall listing; maaaring magkaiba ang oras ng bawat tindahan. I-check muli bago bumiyahe.</p>
             </aside>
           </div>
         </div>
@@ -206,8 +165,8 @@ const faqData = {
           <div class="facts-grid">
             <article class="fact-card">
               <span class="fact-no">01 / PRESYO</span>
-              <div class="fact-value">₱0</div>
-              <div class="fact-copy">Walang entrance fee. Shopping budget ang kailangan mong bantayan.</div>
+              <div class="fact-value">Tanong</div>
+              <div class="fact-copy">Kumpirmahin ang anumang admission o service fee at ang final na presyo bago magbayad.</div>
             </article>
             <article class="fact-card">
               <span class="fact-no">02 / ORAS</span>
@@ -222,7 +181,7 @@ const faqData = {
             <article class="fact-card">
               <span class="fact-no">04 / LOKASYON</span>
               <div class="fact-value">Tabora</div>
-              <div class="fact-copy">866 Tabora St, Binondo, Manila—nasa gitna ng mas malaking Divisoria shopping district.</div>
+              <div class="fact-copy">Google Maps: 866 Tabora St, Binondo, Manila. Gamitin ang pin para sa Divisoria Mall na gusali, hindi basta district search.</div>
             </article>
           </div>
         </div>
@@ -267,7 +226,7 @@ const faqData = {
             <article class="planner-card">
               <div class="planner-icon">₱</div>
               <h3>Ticket / gastos</h3>
-              <p><strong>Libre ang entrance.</strong> Walang ticket na kailangang bilhin. Ang gastos ay shopping, pagkain at transport/parking.</p>
+              <p><strong>Kumpirmahin ang singil.</strong> Hindi beripikado rito ang admission policy. Magbudget para sa shopping, pagkain at transport/parking.</p>
               <ul class="micro-list"><li>Walang fixed shopping cost</li><li>Bulk price ≠ tingi price</li><li>Magdala ng cash backup</li></ul>
             </article>
             <article class="planner-card">
@@ -322,9 +281,9 @@ const faqData = {
           <div class="food-strip">
             <div class="food-visual"><img src="/images/divisoria-street.jpg" alt="Abalang kalye sa Divisoria at Binondo district" width="1280" height="853" loading="lazy" /></div>
             <div class="food-list">
-              <article class="food-item"><small>168 Shopping Mall</small><h3>Wai Ying Dimsums — 168 Branch</h3><p>Convenient kung ayaw mong lumayo sa shopping zone: dim sum at quick Chinese meals sa loob ng 168 area.</p></article>
-              <article class="food-item"><small>Yuchengco St · Binondo</small><h3>Ying Ying Tea House</h3><p>Classic Binondo stop para sa dim sum, rice meals at Chinese comfort food; magandang isabay bago o pagkatapos ng Divisoria run.</p></article>
-              <article class="food-item"><small>Lucky Chinatown</small><h3>Manam Comfort Filipino</h3><p>Mas relaxed at air-conditioned na sit-down option kung gusto mong magpahinga mula sa street-market pace.</p></article>
+              <article class="food-item"><small>168 Shopping Mall</small><h3>Kumpirmahin ang mismong food stall</h3><p>Ibang gusali ang 168. Kung doon kakain, kumpirmahin muna ang pangalan ng kainan, menu at oras bago lumipat mula Divisoria Mall.</p></article>
+              <article class="food-item"><small>Yuchengco St · Binondo</small><h3>Mga kainan sa Binondo</h3><p>Pumili ayon sa kasalukuyang menu, dietary needs at oras. Walang beripikadong current restaurant directory o ranking sa gabay na ito.</p></article>
+              <article class="food-item"><small>Lucky Chinatown</small><h3>Hiwalay na commercial complex</h3><p>Kung lilipat sa Lucky Chinatown para kumain o magpahinga, kumpirmahin ang access, oras at kainan doon. Hindi ito bahagi ng Divisoria Mall.</p></article>
             </div>
           </div>
         </div>
@@ -382,8 +341,9 @@ const faqData = {
 
       <section class="photo-credits" aria-labelledby="credits-title">
         <div class="container">
-          <h2 id="credits-title">Mga kredito ng larawan</h2>
-          <p>Mga lokal na kopya mula sa Wikimedia Commons: Ralff Nestor Nacor (CC BY-SA 4.0), Zarate123 (CC BY-SA 4.0), Timothy Albano (CC BY 3.0), at Patrick Roque (CC BY-SA 3.0). Tingnan ang kumpletong source at attribution sa <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a> at sa <code>CREDITS.md</code> ng project.</p>
+          <h2 id="credits-title">Mga sanggunian at kredito</h2>
+          <p>Lokasyon, oras at rating: <a href={site.mapsUrl}>Google Maps</a>, sinuri noong 19 Oktubre 2026. Ang <a href="https://manila.gov.ph/wp-content/uploads/2023/10/DILG-Safety-Seal-Updated-102823.pdf">City of Manila listahan noong 2023</a> ay may historical records ng mga negosyo sa Divisoria Mall at gumagamit ng San Nicolas; ang Maps address ay gumagamit ng Binondo. Ang lumang listahan ay hindi kasalukuyang tenant directory o garantiya ng safety, at hindi nito pinatutunayan ang oras ngayon.</p>
+          <p>Mga lokal na kopya mula sa Wikimedia Commons: Ralff Nestor Nacor (CC BY-SA 4.0), Zarate123 (CC BY-SA 4.0), Timothy Albano (CC BY 3.0), at Patrick Roque (CC BY-SA 3.0). Tingnan ang mga source sa <a href="https://commons.wikimedia.org/wiki/File:Divisoria_Mall,_San_Nicolas,_Manila,_Oct_2025.jpg">Divisoria Mall photo</a>, <a href="https://commons.wikimedia.org/wiki/File:Divisoria_San_Nicolas_Binondo_Districts_01.jpg">Divisoria street</a>, <a href="https://commons.wikimedia.org/wiki/File:Divisoria_Shopping.jpg">shopping scene</a>, at <a href="https://commons.wikimedia.org/wiki/File:Binondo_Church_in_front_of_Plaza_San_Lorenzo_Ruiz,_Binondo,_Manila.jpg">Binondo Church</a>.</p>
         </div>
       </section>
     </main>
@@ -395,6 +355,7 @@ const faqData = {
           <p><strong>Hindi ito opisyal na website ng Divisoria Mall.</strong> Independent travel at shopping guide ito; maaaring magbago ang hours, parking, routes, presyo at tenant details. I-verify ang time-sensitive na impormasyon bago bumiyahe.</p>
         </div>
         <div class="footer-badge">Made for Manila explorers</div>
+        <p>Privacy: Gumagamit ang pahinang ito ng Google Analytics, Google Maps embed at mga kaugnay na serbisyo ng Google. Maaaring maproseso ang datos ng browser at pagbisita o cookies ayon sa <a href="https://policies.google.com/privacy" rel="external">patakaran ng Google</a>. Gamitin ang browser privacy controls para pamahalaan ang cookies. Ang correction email ay boluntaryong pakikipag-ugnayan; huwag magpadala ng sensitibong impormasyon.</p>
       </div>
     </footer>
   </body>

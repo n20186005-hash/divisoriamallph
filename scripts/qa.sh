@@ -16,11 +16,8 @@ if find dist -type f \( -name 'sitemap*.xml' -o -name 'sitemap*.xml.gz' \) | gre
     echo 'QA failed: sitemap contains lastmod; this project does not fabricate modification dates.' >&2
     exit 1
   fi
-  if [[ -z "${SITE_URL:-}" ]]; then
-    echo 'QA failed: sitemap exists although SITE_URL is empty.' >&2
-    exit 1
-  fi
-  if ! grep -RqsF "${SITE_URL%/}" dist/sitemap*; then
+  expected_site="${SITE_URL:-https://divisoriamallph.com}"
+  if ! grep -RqsF "${expected_site%/}" dist/sitemap*; then
     echo 'QA failed: sitemap URLs do not match SITE_URL.' >&2
     exit 1
   fi

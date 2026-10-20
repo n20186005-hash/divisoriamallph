@@ -27,7 +27,7 @@ Ang domain ay iisang beses lang kino-configure sa pamamagitan ng `SITE_URL`, na 
 SITE_URL="$PRODUCTION_SITE_URL" pnpm build
 ```
 
-Kapag walang `SITE_URL`, normal pa ring nagbu-build ang site. Hindi ilalabas ang absolute canonical / Open Graph URL, at hindi ia-activate ang sitemap integration. Walang placeholder domain fallback.
+Kapag walang `SITE_URL`, ginagamit ang https://divisoriamallph.com para sa canonical, Open Graph at sitemap.
 
 ## Cloudflare Workers
 
@@ -36,7 +36,7 @@ pnpm build
 pnpm wrangler deploy
 ```
 
-Ang `wrangler.jsonc` ay naka-configure para sa Workers Static Assets deployment ng laman ng `dist/`.
+Ang `wrangler.jsonc` ay naka-configure para sa Workers Static Assets deployment ng laman ng `dist/`. Ang Worker ay nagre-redirect ng HTTP/www sa canonical HTTPS domain habang pinapanatili ang path at query, at nilalagyan ng noindex ang 404.
 
 ## QA bago i-deploy
 

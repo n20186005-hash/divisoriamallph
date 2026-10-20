@@ -17,6 +17,7 @@
 }
 
 * { box-sizing: border-box; }
+[id] { scroll-margin-top: 90px; }
 html { scroll-behavior: smooth; background: var(--paper); }
 body {
   margin: 0;
@@ -268,7 +269,10 @@ details p { margin: 0; padding: 0 20px 20px; color: var(--muted); }
 .footer-badge { flex: 0 0 auto; padding: 7px 10px; border: 1px solid rgba(255,255,255,.22); font-size: .7rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
 
 @media (max-width: 900px) {
-  .nav-links a:not(.map-pill) { display: none; }
+  [id] { scroll-margin-top:200px; }
+  .nav { flex-wrap:wrap; padding-top:.7rem; padding-bottom:.7rem; gap:.5rem; }
+  .nav-links { width:100%; }
+  .nav-links a { display:inline-flex; align-items:center; min-height:44px; }
   .hero { min-height: auto; }
   .hero-grid, .story-grid, .transport-grid, .food-strip { grid-template-columns: 1fr; }
   .hero-inner { padding-top: 150px; }
