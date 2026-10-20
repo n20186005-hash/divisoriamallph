@@ -285,6 +285,7 @@ details p { margin: 0; padding: 0 20px 20px; color: var(--muted); }
 }
 
 @media (max-width: 560px) {
+  .sticker { right: 8px; transform: none; }
   .container { width: min(100% - 24px, 1160px); }
   .section { padding: 68px 0; }
   .site-header .nav { min-height: 64px; }
