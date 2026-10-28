@@ -1,0 +1,15 @@
+---
+import SubpageLayout from '../layouts/SubpageLayout.astro';
+import TopicPage from '../components/TopicPage.astro';
+import { TOPICS, getTopic } from '../data/topics';
+
+export function getStaticPaths() {
+  return TOPICS.map((t) => ({ params: { topic: t.slug }, props: { topic: t } }));
+}
+
+const { topic } = Astro.props;
+---
+
+<SubpageLayout topic={topic}>
+  <TopicPage topic={topic} />
+</SubpageLayout>

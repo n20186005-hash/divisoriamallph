@@ -1,23 +1,39 @@
 ---
 import '../styles/global.css';
 import { SITE_NAME, site } from '../data/site';
+import { TOPICS, CLUSTERS } from '../data/topics';
 
-const title = 'Divisoria Mall Manila: Oras, 866 Tabora Address at Gabay';
-const description = 'Gabay sa Divisoria Mall, 866 Tabora St, Manila: Google Maps hours na may petsa ng pag-check, lokasyon, kaibahan sa ibang mall, at mga tanong bago mamili.';
+const clusterOrder = ['food', 'shopping', 'transport', 'attractions', 'itineraries'] as const;
+const topicsByCluster = clusterOrder.map((c) => ({
+  label: CLUSTERS[c],
+  items: TOPICS.filter((t) => t.cluster === c),
+}));
+
+const title = 'Divisoria Mall Hours & Daily Operating Times — 866 Tabora St, Binondo, Manila';
+const description = 'Divisoria Mall official opening hours: 07:00–18:15 daily at 866 Tabora St, Binondo, Manila. Know the mall vs. Tabora street market operating times before you shop.';
 const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
 const heroImageUrl = Astro.site ? new URL('/images/divisoria-mall-hero.jpg', Astro.site) : undefined;
 
 const placeData = {
   '@context': 'https://schema.org',
-  '@type': 'TouristAttraction',
-  '@id': canonicalUrl ? `${canonicalUrl.href}#attraction` : undefined,
+  '@type': ['ShoppingCenter', 'LocalBusiness'],
+  '@id': canonicalUrl ? `${canonicalUrl.href}#mall` : undefined,
   name: site.name,
   description,
   url: canonicalUrl?.href,
   image: heroImageUrl?.href,
   hasMap: site.mapsUrl,
-  address: {'@type': 'PostalAddress', streetAddress: site.streetAddress, addressLocality: site.addressLocality, addressRegion: site.addressRegion, addressCountry: site.addressCountry},
+  address: {'@type': 'PostalAddress', streetAddress: site.streetAddress, addressLocality: site.addressLocality, addressRegion: site.addressRegion, postalCode: '1006', addressCountry: site.addressCountry},
   geo: {'@type': 'GeoCoordinates', latitude: site.latitude, longitude: site.longitude},
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      opens: site.opens,
+      closes: site.closes,
+    },
+  ],
+  sameAs: [site.mapsUrl],
 };
 
 const faqs = [
@@ -110,6 +126,7 @@ const faqData = {
           <img src="/logo.svg" alt="Divisoria Mall Guide" width="420" height="96" />
         </a>
         <nav class="nav-links" aria-label="Pangunahing nabigasyon">
+          <a href="#quick-info">Oras</a>
           <a href="#gabay">Gabay</a>
           <a href="#biyahe">Biyahe</a>
           <a href="#kain">Kain</a>
@@ -142,7 +159,7 @@ const faqData = {
               <h2>Bago ka sumabak</h2>
               <div class="ticket-row"><span>Admission / singil</span><strong>Itanong sa mall</strong></div>
               <div class="ticket-row"><span>Karaniwang oras</span><strong>07:00–18:15</strong></div>
-              <div class="ticket-row"><span>Rating sa Google</span><strong>4.2 / 5 · 6,728 review</strong></div>
+              <div class="ticket-row"><span>Rating sa Google</span><strong>4.2 / 5 · 6,730 review</strong></div>
               <div class="ticket-row"><span>Suggested stay</span><strong>2–4 oras</strong></div>
               <p class="ticket-note">Google Maps snapshot: 19 Oktubre 2026. Ang rating ay mula sa third party, hindi mga review ng gabay. Ang oras ay para sa mall listing; maaaring magkaiba ang oras ng bawat tindahan. I-check muli bago bumiyahe.</p>
             </aside>
@@ -156,6 +173,38 @@ const faqData = {
           <span>Presyong pang-Divisoria</span><span>Magkumpara bago bumili</span><span>Cash + small bills</span><span>Weekday morning</span><span>Wholesale at tingi</span><span>Comfortable shoes</span>
         </div>
       </div>
+
+      <section class="section section-tight quick-info" id="quick-info" aria-labelledby="quick-info-title">
+        <div class="container">
+          <span class="eyebrow">Mabilisang impormasyon</span>
+          <h2 class="section-title" id="quick-info-title">Oras, best time, at kaibahan ng mall at street market.</h2>
+          <p class="section-lede">Bago ang unang Divisoria run, ito ang mga basics: kailan bukas ang mall, kailan pinakamaganda pumunta, at bakit iba ang oras ng Tabora St street market sa loob ng gusali.</p>
+
+          <div class="qi-grid">
+            <article class="qi-card">
+              <div class="qi-tag">Opening Hours</div>
+              <h3>Daily Operating Times</h3>
+              <p class="qi-time">07:00 – 18:15</p>
+              <p>Araw-araw (Lunes hanggang Linggo), base sa Google Maps listing noong 19 Oktubre 2026. Ito ang oras ng mall bilang gusali; puwedeng magkaiba ang oras ng bawat tindahan o stall sa loob.</p>
+            </article>
+            <article class="qi-card">
+              <div class="qi-tag">Best Time to Visit</div>
+              <h3>Kailan pumunta</h3>
+              <p><strong>Weekday morning</strong>, lalo na sa unang bahagi ng araw pagkabukas. Mas presko, mas maluwag at mas madaling magtanong at magkumpara kaysa sa weekend at holiday crowd.</p>
+            </article>
+            <article class="qi-card">
+              <div class="qi-tag">Holiday / Festive</div>
+              <h3>Oras kapag holiday</h3>
+              <p>Hindi beripikado rito ang holiday schedule. Sa peak season (Pasko, payday weekends, mga sale), puwedeng magbago ang oras o magsara ang ilang stall. I-check ang live Google Maps bago bumiyahe tuwing holiday.</p>
+            </article>
+            <article class="qi-card">
+              <div class="qi-tag">Mall vs. Street Market</div>
+              <h3>Tabora St, Binondo</h3>
+              <p>Ang <strong>Divisoria Mall</strong> ay may fixed daily operating times (07:00–18:15). Ang paligid nitong <strong>Tabora St</strong> ay wholesale street market ng accessories at handmade goods—mas maagang gumagalaw ang ibang stall at iba ang rhythm kaysa sa loob ng mall. Magkaiba ang dalawang oras.</p>
+            </article>
+          </div>
+        </div>
+      </section>
 
       <section class="section" id="gabay">
         <div class="container">
@@ -336,6 +385,31 @@ const faqData = {
             <a class="feedback-mail" href="mailto:claritleonelmnicol@gmail.com">claritleonelmnicol@gmail.com</a>
             <p class="feedback-note">Mas makakatulong kung malinaw mong ilalagay kung anong bahagi ng page ang may mali at, kung maaari, magdagdag ng updated na detalye o source.</p>
           </div>
+        </div>
+      </section>
+
+      <section class="section" id="guides" aria-labelledby="guides-title">
+        <div class="container">
+          <span class="eyebrow">Higit pang gabay</span>
+          <h2 class="section-title" id="guides-title">Mga tiyak na gabay sa Divisoria</h2>
+          <p class="section-lede">
+            Pinili naming isulat ang mga pahinang ito sa Ingles para sa mga tanong sa web. Pumili ng paksa:
+          </p>
+
+          {
+            topicsByCluster.map((group) => (
+              <div class="guide-cluster">
+                <h3>{group.label}</h3>
+                <ul class="guide-links">
+                  {group.items.map((t) => (
+                    <li>
+                      <a href={`/${t.slug}/`}>{t.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
         </div>
       </section>
 

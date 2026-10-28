@@ -1,0 +1,44 @@
+---
+import type { Topic } from '../data/topics';
+
+interface Props {
+  topic: Topic;
+}
+const { topic } = Astro.props;
+---
+
+<article class="topic-article container">
+  <p class="kicker">{topic.kicker}</p>
+  <h1>{topic.title}</h1>
+  <p class="lede">{topic.intro}</p>
+
+  {
+    topic.sections.map((section) => (
+      <section class="topic-section">
+        <h2>{section.heading}</h2>
+        {section.body?.map((p) => <p>{p}</p>)}
+        {section.list && (
+          <ul>
+            {section.list.map((li) => (
+              <li>{li}</li>
+            ))}
+          </ul>
+        )}
+      </section>
+    ))
+  }
+
+  <section class="topic-faq">
+    <h2>Frequently asked questions</h2>
+    <dl>
+      {
+        topic.faqs.map((f) => (
+          <div class="faq-item">
+            <dt>{f.q}</dt>
+            <dd>{f.a}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+</article>

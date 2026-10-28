@@ -15,7 +15,7 @@ export const site = {
   opens: '07:00',
   closes: '18:15',
   ratingValue: '4.2',
-  reviewCount: '6728',
+  reviewCount: '6730',
   mapsUrl: 'https://maps.app.goo.gl/L8eri2PCFLhADxDk9',
   email: 'claritleonelmnicol@gmail.com',
   gaId: 'G-HXM22WWPKP',
